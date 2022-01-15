@@ -1,33 +1,33 @@
 package week_1.Union_find;
 
-public class QuickFindUF {
-    
+public class QuickUnionUF {
     private int[] id;
 
-    public QuickFindUF(int N) {
+    public QuickUnionUF(int N) {
         id = new int[N];
         for (int i = 0; i < N; i++) {
             id[i] = i;
         }
     }
+
+    // lazy approach
+
+    private int root(int i) {
+        while (id[i] != i)
+            i = id[i];
+        return i;
+    }
+
     public boolean connected(int p, int q) {
-        return id[p] == id[q];
+        return root(p) == root(q);
     }
 
     public void union(int p, int q) {
-        int pId = id[p];
-        int qId = id[q];
+        int rootOfQ = root(q);
+        int rootOfP = root(p);
 
-        for (int i = 0; i < id.length; i++) {
-            if (id[i] == pId) {
-                id[i] = qId;
-            }
-        }
+        id[rootOfP] = rootOfQ;
     }
-
-    
-
-
 
     public void printResult() {
         String leftAlignFormat = "| %-15s | %-4d |%n";
@@ -40,5 +40,4 @@ public class QuickFindUF {
         System.out.format("+-----------------+------+%n");
 
     }
-    
 }
